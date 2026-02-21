@@ -1,6 +1,14 @@
 const API_BASE = "https://api.everrest.educata.dev";
 
-const products = [
+const token = localStorage.getItem("token");
+console.log("Token found:", token ? "YES" : "NO");
+
+if (!token) {
+  console.log("No token, redirecting to login...");
+  window.location.href = "login.html";
+}
+
+const LOCAL_PRODUCTS_DETAILS = [
   {
     name: "Apple iPhone 17 Pro",
     price: 4059,
@@ -518,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
 
   console.log("✅ Product addition script loaded!");
-  console.log(`📦 ${products.length} products ready to add:`);
+  console.log(`📦 ${LOCAL_PRODUCTS_DETAILS.length} products ready to add:`);
   console.log("   - 21 Smartphones");
   console.log("   - 8 Laptops");
   console.log("   - 4 Tablets");
@@ -590,7 +598,7 @@ function setupProductCards() {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
         const productName = card.dataset.name;
-        const fullProduct = products.find((p) => p.name === productName);
+        const fullProduct = allProducts.find((p) => p.name === productName);
 
         if (fullProduct) {
           const product = {
@@ -629,7 +637,7 @@ function setupProductCards() {
 
 function goToProductDetail(card) {
   const productName = card.dataset.name;
-  const fullProduct = products.find((p) => p.name === productName);
+  const fullProduct = allProducts.find((p) => p.name === productName);
 
   if (fullProduct) {
     const productData = {
@@ -672,7 +680,7 @@ function goToProductDetail(card) {
 }
 
 function getProductDescription(name) {
-  const product = products.find((p) => p.name === name);
+  const product = allProducts.find((p) => p.name === name);
   return product
     ? product.description
     : "დეტალური ინფორმაცია პროდუქტის შესახებ.";
@@ -807,20 +815,463 @@ function updateCartCount() {
   }
 }
 
+let allProducts = [];
+let filteredProducts = [];
+let isLoading = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🚀 App initialized");
+  console.log("API Base URL:", API_BASE);
+  console.log(
+    "Local products database loaded:",
+    LOCAL_PRODUCTS_DETAILS.length,
+    "products",
+  );
+  fetchProductsFromAPI();
+  updateCartCount();
+  setupEventListeners();
+});
+
+async function fetchProductsFromAPI() {
+  console.log("🚀 Loading local products...");
+
+  const productsGrid = document.getElementById("productsGrid");
+  const noResults = document.getElementById("noResults");
+
+  if (!productsGrid) {
+    console.error("❌ productsGrid element not found!");
+    return;
+  }
+
+  productsGrid.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+      <div style="font-size: 2rem; color: #ff6b00;">იტვირთება...</div>
+      <div style="margin-top: 1rem; color: #666;">პროდუქტების ჩატვირთვა</div>
+    </div>
+  `;
+
+  allProducts = LOCAL_PRODUCTS_DETAILS.map((product, index) => ({
+    id: "local_" + index,
+    name: product.name,
+    price: parseFloat(product.price || 0),
+    rating: parseFloat(product.rating || 0),
+    stock: parseInt(product.stock || 0),
+    brand: product.brand || "Unknown",
+    category: product.category || "Other",
+    image:
+      product.image ||
+      "https://placehold.co/300x300/ff6b00/white?text=" +
+        encodeURIComponent(product.name || "Product"),
+    description: product.description || "არ არის აღწერა",
+    release_date:
+      product.release_date || new Date().toISOString().split("T")[0],
+    reviews_count: 0,
+    thumbnail: product.image || "",
+    images: [product.image || ""],
+  }));
+
+  console.log("✅ Loaded " + allProducts.length + " local products");
+
+  filteredProducts = [...allProducts];
+  displayProducts(filteredProducts);
+  updateCategoryCounts();
+}
+
+function displayProducts(products) {
+  const productsGrid = document.getElementById("productsGrid");
+  const noResults = document.getElementById("noResults");
+
+  console.log("🎨 displayProducts called with:", products.length, "products");
+  console.log("📍 productsGrid element:", productsGrid);
+  console.log("📍 noResults element:", noResults);
+
+  if (!productsGrid) {
+    console.error("❌ productsGrid element not found!");
+    return;
+  }
+
+  if (products.length === 0) {
+    console.warn("⚠️ No products to display");
+    productsGrid.style.display = "none";
+    if (noResults) noResults.style.display = "block";
+    return;
+  }
+
+  console.log("✅ Setting up grid display...");
+  productsGrid.style.display = "grid";
+  if (noResults) noResults.style.display = "none";
+  productsGrid.innerHTML = "";
+
+  console.log("🔨 Creating product cards...");
+  products.forEach((product, index) => {
+    try {
+      console.log(
+        `  Creating card ${index + 1}/${products.length}:`,
+        product.name,
+      );
+      const card = createProductCard(product);
+      productsGrid.appendChild(card);
+    } catch (error) {
+      console.error(
+        `❌ Error creating card for product ${index}:`,
+        error,
+        product,
+      );
+    }
+  });
+
+  console.log(`✅ Displayed ${products.length} products successfully`);
+}
+
+function createProductCard(product) {
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.dataset.name = product.name;
+  card.dataset.price = product.price;
+  card.dataset.rating = product.rating;
+  card.dataset.brand = product.brand;
+  card.dataset.category = product.category;
+
+  const rating = product.rating || 0;
+  const stars =
+    "★".repeat(Math.floor(rating)) + "☆".repeat(5 - Math.floor(rating));
+
+  const stock = product.stock || 0;
+  const stockStatus =
+    stock === 0
+      ? '<span style="color: #d32f2f; font-weight: 600;">არ არის საწყობში</span>'
+      : stock < 5
+        ? `<span style="color: #d32f2f; font-weight: 600;">საწყობში: ${stock} ცალი</span>`
+        : `<span style="color: #2e7d32; font-weight: 600;">საწყობში: ${stock} ცალი</span>`;
+
+  card.innerHTML = `
+    <div class="product-image-container">
+      <img
+        src="${product.image}"
+        alt="${product.name}"
+        class="product-image"
+        onerror="this.src='https://placehold.co/300x300/cccccc/666666?text=No+Image'"
+      />
+      ${stock === 0 ? '<div style="position: absolute; top: 10px; right: 10px; background: #d32f2f; color: white; padding: 0.5rem; font-weight: 600; border-radius: 4px;">SOLD OUT</div>' : ""}
+    </div>
+    <div class="product-info">
+      <h3 class="product-name">${product.name}</h3>
+      <div class="product-meta" style="font-size: 0.875rem; color: #666; margin: 0.5rem 0;">
+        ${stockStatus}
+      </div>
+      <div class="product-price">${product.price} ₾</div>
+      <div class="product-rating">
+        <span class="stars">${stars}</span>
+        <span class="rating-number">(${rating.toFixed(1)})</span>
+      </div>
+      <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+        <button 
+          class="add-to-cart-btn" 
+          style="flex: 1;"
+          ${stock === 0 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ""}
+        >
+          ${stock === 0 ? "არ არის საწყობში" : "კალათაში დამატება"}
+        </button>
+        <button 
+          class="view-details-btn"
+          style="padding: 0.75rem 1rem; background: transparent; border: 2px solid #1a1a1a; cursor: pointer; font-weight: 600; white-space: nowrap;"
+        >
+          დეტალები
+        </button>
+      </div>
+    </div>
+  `;
+
+  const addToCartBtn = card.querySelector(".add-to-cart-btn");
+  if (stock > 0 && addToCartBtn) {
+    addToCartBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      addToCart(product);
+    });
+  }
+
+  const viewDetailsBtn = card.querySelector(".view-details-btn");
+  if (viewDetailsBtn) {
+    viewDetailsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      viewProductDetails(product);
+    });
+  }
+
+  return card;
+}
+
+function addToCart(product) {
+  if (product.stock === 0) {
+    showNotification("პროდუქტი არ არის საწყობში!", true);
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existingItem = cart.find((item) => item.id === product.id);
+
+  if (existingItem) {
+    if (existingItem.quantity >= product.stock) {
+      showNotification("საწყობში მეტი რაოდენობა არ არის!", true);
+      return;
+    }
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      rating: product.rating,
+      stock: product.stock,
+      reviews_count: product.reviews_count || 0,
+      quantity: 1,
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+  showNotification("პროდუქტი დამატებულია კალათაში!");
+}
+
+function viewProductDetails(product) {
+  localStorage.setItem("currentProduct", JSON.stringify(product));
+  window.location.href = "product-detail.html";
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((total, item) => total + item.quantity, 0);
+  const cartCountElement = document.getElementById("cartCount");
+  if (cartCountElement) {
+    cartCountElement.textContent = count;
+  }
+}
+
+function setupEventListeners() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      console.log("Logging out...");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("cart");
+      window.location.href = "login.html";
+    });
+  }
+
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      applyFilters(searchTerm);
+    });
+  }
+
+  const categoryFilter = document.getElementById("categoryFilter");
+  if (categoryFilter) {
+    categoryFilter.addEventListener("change", () => {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      applyFilters(searchTerm);
+    });
+  }
+
+  const brandFilter = document.getElementById("brandFilter");
+  if (brandFilter) {
+    brandFilter.addEventListener("change", () => {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      applyFilters(searchTerm);
+    });
+  }
+
+  const minPrice = document.getElementById("minPrice");
+  if (minPrice) {
+    minPrice.addEventListener("input", () => {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      applyFilters(searchTerm);
+    });
+  }
+
+  const maxPrice = document.getElementById("maxPrice");
+  if (maxPrice) {
+    maxPrice.addEventListener("input", () => {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      applyFilters(searchTerm);
+    });
+  }
+
+  const minRating = document.getElementById("minRating");
+  if (minRating) {
+    minRating.addEventListener("change", () => {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      applyFilters(searchTerm);
+    });
+  }
+
+  const sortSelect = document.getElementById("sortSelect");
+  if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      applyFilters(searchTerm);
+    });
+  }
+
+  const resetFilters = document.getElementById("resetFilters");
+  if (resetFilters) {
+    resetFilters.addEventListener("click", resetFiltersFunc);
+  }
+}
+
+function applyFilters(searchTerm = "") {
+  const category = document.getElementById("categoryFilter")?.value || "";
+  const brand = document.getElementById("brandFilter")?.value || "";
+  const minPrice = parseFloat(document.getElementById("minPrice")?.value) || 0;
+  const maxPrice =
+    parseFloat(document.getElementById("maxPrice")?.value) || Infinity;
+  const minRating =
+    parseFloat(document.getElementById("minRating")?.value) || 0;
+  const sortBy = document.getElementById("sortSelect")?.value || "";
+
+  filteredProducts = allProducts.filter((product) => {
+    const matchesSearch =
+      searchTerm === "" ||
+      product.name.toLowerCase().includes(searchTerm) ||
+      product.brand.toLowerCase().includes(searchTerm) ||
+      product.category.toLowerCase().includes(searchTerm);
+
+    const matchesCategory = category === "" || product.category === category;
+    const matchesBrand = brand === "" || product.brand === brand;
+    const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+    const matchesRating = product.rating >= minRating;
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesBrand &&
+      matchesPrice &&
+      matchesRating
+    );
+  });
+
+  if (sortBy) {
+    filteredProducts.sort((a, b) => {
+      switch (sortBy) {
+        case "price-asc":
+          return a.price - b.price;
+        case "price-desc":
+          return b.price - a.price;
+        case "rating-desc":
+          return b.rating - a.rating;
+        case "name-asc":
+          return a.name.localeCompare(b.name);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  displayProducts(filteredProducts);
+}
+
+function resetFiltersFunc() {
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilter = document.getElementById("categoryFilter");
+  const brandFilter = document.getElementById("brandFilter");
+  const minPrice = document.getElementById("minPrice");
+  const maxPrice = document.getElementById("maxPrice");
+  const minRating = document.getElementById("minRating");
+  const sortSelect = document.getElementById("sortSelect");
+
+  if (searchInput) searchInput.value = "";
+  if (categoryFilter) categoryFilter.value = "";
+  if (brandFilter) brandFilter.value = "";
+  if (minPrice) minPrice.value = "";
+  if (maxPrice) maxPrice.value = "";
+  if (minRating) minRating.value = "";
+  if (sortSelect) sortSelect.value = "";
+
+  filteredProducts = [...allProducts];
+  displayProducts(filteredProducts);
+}
+
+function filterByCategory(category) {
+  const categoryFilter = document.getElementById("categoryFilter");
+  const brandFilter = document.getElementById("brandFilter");
+
+  if (categoryFilter) categoryFilter.value = category;
+  if (brandFilter) brandFilter.value = "";
+
+  applyFilters();
+
+  const productsSection = document.getElementById("productsSection");
+  if (productsSection) {
+    productsSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function filterByBrand(brand) {
+  const brandFilter = document.getElementById("brandFilter");
+
+  if (brandFilter) brandFilter.value = brand;
+
+  applyFilters();
+
+  const productsSection = document.getElementById("productsSection");
+  if (productsSection) {
+    productsSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function updateCategoryCounts() {
+  const counts = {};
+  allProducts.forEach((product) => {
+    counts[product.category] = (counts[product.category] || 0) + 1;
+  });
+
+  console.log("Category counts:", counts);
+
+  document.querySelectorAll(".category-card").forEach((card) => {
+    const categoryName = card.querySelector(".category-name")?.textContent;
+    const countElement = card.querySelector(".category-count");
+
+    if (categoryName && countElement) {
+      const categoryKey = getCategoryKey(categoryName);
+      if (counts[categoryKey]) {
+        countElement.textContent = `${counts[categoryKey]} პროდუქტი`;
+      } else {
+        countElement.textContent = "0 პროდუქტი";
+      }
+    }
+  });
+}
+
+function getCategoryKey(georgianName) {
+  const mapping = {
+    სმართფონები: "Smartphones",
+    ლეპტოპები: "Laptops",
+    ტაბლეტები: "Tablets",
+    აუდიო: "Audio",
+    "სმარტ საათები": "Wearables",
+    მონიტორები: "Monitors",
+  };
+  return mapping[georgianName] || georgianName;
+}
+
 function showNotification(message, isError = false) {
   const notification = document.createElement("div");
   notification.style.cssText = `
     position: fixed;
     top: 100px;
     right: 20px;
-    background: ${isError ? "#f44336" : "#ff6b00"};
+    background: ${isError ? "#d32f2f" : "#ff6b00"};
     color: white;
     padding: 1rem 2rem;
-    border-radius: 8px;
+    border: none;
+    border-radius: 4px;
     z-index: 1000;
     animation: slideInRight 0.3s ease-out;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   `;
   notification.textContent = message;
   document.body.appendChild(notification);
@@ -831,108 +1282,11 @@ function showNotification(message, isError = false) {
   }, 3000);
 }
 
-function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  localStorage.removeItem("cart");
-  window.location.href = "login.html";
-}
-
-async function addProductsToAPI() {
-  const token = localStorage.getItem("token");
-
-  console.log("=== STARTING PRODUCT ADDITION ===");
-  console.log("Token exists:", !!token);
-
-  if (!token) {
-    console.error("❌ No token found. Please login first.");
-    alert("გთხოვთ ჯერ გაიაროთ ავტორიზაცია!");
-    return;
-  }
-
-  console.log(`Starting to add ${products.length} products...`);
-  console.log("API Endpoint:", `${API_BASE}/shop/products`);
-
-  let successCount = 0;
-  let failCount = 0;
-  const errors = [];
-
-  for (let i = 0; i < products.length; i++) {
-    const product = products[i];
-    console.log(`\n[${i + 1}/${products.length}] Adding: ${product.name}`);
-
-    try {
-      const response = await fetch(`${API_BASE}/shop/products`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-      });
-
-      console.log(`Response status: ${response.status} ${response.statusText}`);
-
-      const responseText = await response.text();
-      console.log("Raw response:", responseText);
-
-      let data;
-      try {
-        data = JSON.parse(responseText);
-      } catch (e) {
-        console.error("Failed to parse JSON:", e);
-        data = { error: "Invalid JSON response", raw: responseText };
-      }
-
-      if (response.ok) {
-        console.log(`✅ Success: ${product.name}`);
-        successCount++;
-      } else {
-        console.error(`❌ Failed: ${product.name}`);
-        console.error("Error response:", data);
-        errors.push({
-          product: product.name,
-          status: response.status,
-          error: data,
-        });
-        failCount++;
-      }
-    } catch (error) {
-      console.error(`❌ Network Error for ${product.name}:`, error);
-      errors.push({
-        product: product.name,
-        error: error.message,
-      });
-      failCount++;
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 200));
-  }
-
-  console.log(`\n=== FINAL RESULTS ===`);
-  console.log(`✅ Success: ${successCount}`);
-  console.log(`❌ Failed: ${failCount}`);
-
-  if (errors.length > 0) {
-    console.log("\n=== ERRORS ===");
-    errors.forEach((err, idx) => {
-      console.log(`Error ${idx + 1}:`, err);
-    });
-  }
-
-  alert(
-    `პროდუქტების დამატება დასრულდა!\nწარმატებული: ${successCount}\nწარუმატებელი: ${failCount}\n\nდეტალებისთვის იხილეთ Console!`,
-  );
-
-  if (successCount > 0) {
-    console.log("Reloading page to show new products...");
-    setTimeout(() => window.location.reload(), 2000);
-  }
-}
-
 if (typeof window !== "undefined") {
-  window.addProductsToAPI = addProductsToAPI;
-  window.productsData = products;
+  window.filterByCategory = filterByCategory;
+  window.filterByBrand = filterByBrand;
+  window.fetchProductsFromAPI = fetchProductsFromAPI;
+  window.applyFilters = applyFilters;
 }
 
 const style = document.createElement("style");
@@ -947,3 +1301,5 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+console.log("✅ app.js loaded successfully");

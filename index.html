@@ -98,7 +98,7 @@
                 />
               </div>
               <h3 class="category-name">სმართფონები</h3>
-              <p class="category-count">21 პროდუქტი</p>
+              <p class="category-count">იტვირთება...</p>
             </div>
             <div class="category-card" onclick="filterByCategory('Laptops')">
               <div class="category-logo category-logo-icon">
@@ -108,7 +108,7 @@
                 />
               </div>
               <h3 class="category-name">ლეპტოპები</h3>
-              <p class="category-count">8 პროდუქტი</p>
+              <p class="category-count">იტვირთება...</p>
             </div>
             <div class="category-card" onclick="filterByCategory('Tablets')">
               <div class="category-logo category-logo-icon">
@@ -128,7 +128,7 @@
                 </svg>
               </div>
               <h3 class="category-name">ტაბლეტები</h3>
-              <p class="category-count">4 პროდუქტი</p>
+              <p class="category-count">იტვირთება...</p>
             </div>
             <div class="category-card" onclick="filterByCategory('Audio')">
               <div class="category-logo category-logo-icon">
@@ -147,7 +147,7 @@
                 </svg>
               </div>
               <h3 class="category-name">აუდიო</h3>
-              <p class="category-count">2 პროდუქტი</p>
+              <p class="category-count">იტვირთება...</p>
             </div>
             <div class="category-card" onclick="filterByCategory('Wearables')">
               <div class="category-logo category-logo-icon">
@@ -169,7 +169,7 @@
                 </svg>
               </div>
               <h3 class="category-name">სმარტ საათები</h3>
-              <p class="category-count">2 პროდუქტი</p>
+              <p class="category-count">იტვირთება...</p>
             </div>
             <div class="category-card" onclick="filterByCategory('Monitors')">
               <div class="category-logo category-logo-icon">
@@ -179,7 +179,7 @@
                 />
               </div>
               <h3 class="category-name">მონიტორები</h3>
-              <p class="category-count">2 პროდუქტი</p>
+              <p class="category-count">იტვირთება...</p>
             </div>
           </div>
         </div>
@@ -212,1087 +212,134 @@
                 <option value="Google">Google</option>
                 <option value="OnePlus">OnePlus</option>
                 <option value="Xiaomi">Xiaomi</option>
-                <option value="Dell">Dell</option>
-                <option value="HP">HP</option>
+                <option value="Nothing">Nothing</option>
+                <option value="Oppo">Oppo</option>
+                <option value="Vivo">Vivo</option>
+                <option value="Realme">Realme</option>
+                <option value="ASUS">ASUS</option>
                 <option value="Lenovo">Lenovo</option>
-                <option value="Asus">Asus</option>
+                <option value="HP">HP</option>
+                <option value="Dell">Dell</option>
                 <option value="Microsoft">Microsoft</option>
-                <option value="Acer">Acer</option>
-                <option value="Razer">Razer</option>
-                <option value="LG">LG</option>
-                <option value="MSI">MSI</option>
-                <option value="Garmin">Garmin</option>
-                <option value="Huawei">Huawei</option>
-                <option value="Amazfit">Amazfit</option>
                 <option value="Sony">Sony</option>
-                <option value="Bose">Bose</option>
-                <option value="Sennheiser">Sennheiser</option>
-                <option value="JBL">JBL</option>
-                <option value="Beats">Beats</option>
-                <option value="TCL">TCL</option>
-                <option value="Hisense">Hisense</option>
+                <option value="LG">LG</option>
               </select>
             </div>
 
             <div class="filter-group">
               <label class="filter-label">ფასი (₾)</label>
-              <div class="price-inputs">
+              <div style="display: flex; gap: 0.5rem">
                 <input
                   type="number"
                   id="minPrice"
-                  placeholder="მინ"
-                  class="price-input"
+                  class="filter-input"
+                  placeholder="მინ."
+                  min="0"
                 />
-                <span class="price-separator">—</span>
                 <input
                   type="number"
                   id="maxPrice"
-                  placeholder="მაქს"
-                  class="price-input"
+                  class="filter-input"
+                  placeholder="მაქს."
+                  min="0"
                 />
               </div>
             </div>
 
             <div class="filter-group">
-              <label class="filter-label">რეიტინგი</label>
-              <select id="ratingFilter" class="filter-select">
-                <option value="">ყველა რეიტინგი</option>
-                <option value="4.5">4.5★ და მეტი</option>
-                <option value="4">4★ და მეტი</option>
-                <option value="3">3★ და მეტი</option>
+              <label class="filter-label">რეიტინგი (მინიმუმ)</label>
+              <select id="minRating" class="filter-select">
+                <option value="">ყველა</option>
+                <option value="4.5">4.5+ ⭐</option>
+                <option value="4.0">4.0+ ⭐</option>
+                <option value="3.5">3.5+ ⭐</option>
+                <option value="3.0">3.0+ ⭐</option>
               </select>
             </div>
 
-            <button id="applyFilters" class="apply-filters-btn">
-              გამოყენება
+            <div class="filter-group">
+              <label class="filter-label">დალაგება</label>
+              <select id="sortSelect" class="filter-select">
+                <option value="">ნაგულისხმევი</option>
+                <option value="price-asc">ფასით (ზრდადი)</option>
+                <option value="price-desc">ფასით (კლებადი)</option>
+                <option value="rating-desc">რეიტინგით</option>
+                <option value="name-asc">სახელით (ა-ჰ)</option>
+              </select>
+            </div>
+
+            <button id="resetFilters" class="reset-btn">
+              ფილტრების გასუფთავება
             </button>
-            <button id="resetFilters" class="reset-filters-btn">
-              გასუფთავება
-            </button>
+          </div>
+
+          <div class="brands-section">
+            <h3 class="brands-title">პოპულარული ბრენდები</h3>
+            <div class="brands-grid">
+              <button
+                class="brand-btn"
+                onclick="filterByBrand('Apple')"
+                style="
+                  background: white;
+                  border: 2px solid var(--primary);
+                  padding: 0.5rem 1rem;
+                  cursor: pointer;
+                  font-weight: 600;
+                  transition: all 0.2s;
+                "
+              >
+                Apple
+              </button>
+              <button
+                class="brand-btn"
+                onclick="filterByBrand('Samsung')"
+                style="
+                  background: white;
+                  border: 2px solid var(--primary);
+                  padding: 0.5rem 1rem;
+                  cursor: pointer;
+                  font-weight: 600;
+                  transition: all 0.2s;
+                "
+              >
+                Samsung
+              </button>
+              <button
+                class="brand-btn"
+                onclick="filterByBrand('Google')"
+                style="
+                  background: white;
+                  border: 2px solid var(--primary);
+                  padding: 0.5rem 1rem;
+                  cursor: pointer;
+                  font-weight: 600;
+                  transition: all 0.2s;
+                "
+              >
+                Google
+              </button>
+              <button
+                class="brand-btn"
+                onclick="filterByBrand('Xiaomi')"
+                style="
+                  background: white;
+                  border: 2px solid var(--primary);
+                  padding: 0.5rem 1rem;
+                  cursor: pointer;
+                  font-weight: 600;
+                  transition: all 0.2s;
+                "
+              >
+                Xiaomi
+              </button>
+            </div>
           </div>
         </aside>
 
-        <main class="products-container" id="productsSection">
-          <div class="products-header">
-            <h2 class="section-title">ყველა პროდუქტი</h2>
-            <p class="products-subtitle">აირჩიე საუკეთესო შეთავაზება შენთვის</p>
-          </div>
+        <main class="products-section" id="productsSection">
+          <h2 class="section-heading">პროდუქტები</h2>
 
-          <div class="products-grid" id="productsGrid">
-            <div
-              class="product-card"
-              data-name="Apple iPhone 17 Pro"
-              data-price="4059"
-              data-rating="4.8"
-              data-brand="Apple"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://zoommer.ge/_next/image?url=https%3A%2F%2Fs3.zoommer.ge%2Fsite%2F25bed6a5-27cc-435d-b4ff-579e9c3048a9_Thumb.jpeg&w=640&q=100"
-                  alt="Apple iPhone 17 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple iPhone 17 Pro</h3>
-                <div class="product-price">4059 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.8)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Apple iPhone 17 Pro Max"
-              data-price="4760"
-              data-rating="4.9"
-              data-brand="Apple"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://prod-cdn.prod.asbis.io/s3size/el:t/rt:fill/w:900/plain/s3://cms/product/2d/22/2d22e5e521d6491cf0dd8c0c8a47f2eb/250915140013863146.webp"
-                  alt="Apple iPhone 17 Pro Max"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple iPhone 17 Pro Max</h3>
-                <div class="product-price">4760 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.9)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Samsung Galaxy S25 Ultra"
-              data-price="4200"
-              data-rating="4.7"
-              data-brand="Samsung"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/437c5f16-0e6c-45e5-9d9c-3f0bc314425e_Thumb.jpeg"
-                  alt="Samsung Galaxy S25 Ultra"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Samsung Galaxy S25 Ultra</h3>
-                <div class="product-price">4200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Google Pixel 10 Pro"
-              data-price="3496"
-              data-rating="4.6"
-              data-brand="Google"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-.jpg"
-                  alt="Google Pixel 10 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Google Pixel 10 Pro</h3>
-                <div class="product-price">3496 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.6)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="OnePlus 15 Pro"
-              data-price="3200"
-              data-rating="4.5"
-              data-brand="OnePlus"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-13.jpg"
-                  alt="OnePlus 15 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">OnePlus 15 Pro</h3>
-                <div class="product-price">3200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Xiaomi 15 Ultra"
-              data-price="3800"
-              data-rating="4.7"
-              data-brand="Xiaomi"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/54d07ad8-6b1e-4f0f-8f67-bcbdfd408d11_Thumb.jpeg"
-                  alt="Xiaomi 15 Ultra"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Xiaomi 15 Ultra</h3>
-                <div class="product-price">3800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Samsung Galaxy S25"
-              data-price="3400"
-              data-rating="4.5"
-              data-brand="Samsung"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/4f1d6d28-b884-4644-bef7-15ca7e958ed7_Thumb.jpeg"
-                  alt="Samsung Galaxy S25"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Samsung Galaxy S25</h3>
-                <div class="product-price">3400 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Xiaomi Redmi Note 15 Pro"
-              data-price="950"
-              data-rating="4.3"
-              data-brand="Xiaomi"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-14-pro-plus-5g.jpg"
-                  alt="Xiaomi Redmi Note 15 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Xiaomi Redmi Note 15 Pro</h3>
-                <div class="product-price">950 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.3)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Google Pixel 9a"
-              data-price="1700"
-              data-rating="4.4"
-              data-brand="Google"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9a.jpg"
-                  alt="Google Pixel 9a"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Google Pixel 9a</h3>
-                <div class="product-price">1700 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.4)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Samsung Galaxy A56 5G"
-              data-price="1600"
-              data-rating="4.2"
-              data-brand="Samsung"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/b4347edb-128d-4e84-b412-83e5af65f02e_Thumb.jpeg"
-                  alt="Samsung Galaxy A56 5G"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Samsung Galaxy A56 5G</h3>
-                <div class="product-price">1600 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.2)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="OnePlus Nord 5"
-              data-price="1400"
-              data-rating="4.3"
-              data-brand="OnePlus"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/510977e6-c908-4984-a6b9-969ec481ce2a_Thumb.jpeg"
-                  alt="OnePlus Nord 5"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">OnePlus Nord 5</h3>
-                <div class="product-price">1400 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.3)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Realme GT 7 Pro"
-              data-price="2100"
-              data-rating="4.4"
-              data-brand="Realme"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/d65d2814-9574-4c4d-803c-4c288f241b7e_Thumb.jpeg"
-                  alt="Realme GT 7 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Realme GT 7 Pro</h3>
-                <div class="product-price">2100 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.4)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Poco F7 Pro"
-              data-price="1850"
-              data-rating="4.3"
-              data-brand="Poco"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/acbd5b75-4e55-459a-a28a-9a16e16c3428_Thumb.jpeg"
-                  alt="Poco F7 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Poco F7 Pro</h3>
-                <div class="product-price">1850 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.3)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Motorola Edge 60 Ultra"
-              data-price="2800"
-              data-rating="4.5"
-              data-brand="Motorola"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/motorola-edge-50-ultra.jpg"
-                  alt="Motorola Edge 60 Ultra"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Motorola Edge 60 Ultra</h3>
-                <div class="product-price">2800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Asus ROG Phone 9 Pro"
-              data-price="3900"
-              data-rating="4.8"
-              data-brand="Asus"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://imgstore.alta.ge/images/400/161/161868_396_5.webp"
-                  alt="Asus ROG Phone 9 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Asus ROG Phone 9 Pro</h3>
-                <div class="product-price">3900 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.8)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Vivo X200 Pro"
-              data-price="3300"
-              data-rating="4.6"
-              data-brand="Vivo"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://www.etotalk.com/media/catalog/product/cache/f1f585d0b4e2610e7dbeee535ee5cea0/v/i/vivo_x200_pro_white.webp"
-                  alt="Vivo X200 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Vivo X200 Pro</h3>
-                <div class="product-price">3300 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.6)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Oppo Find X8 Pro"
-              data-price="3500"
-              data-rating="4.7"
-              data-brand="Oppo"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8-pro.jpg"
-                  alt="Oppo Find X8 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Oppo Find X8 Pro</h3>
-                <div class="product-price">3500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Nothing Phone (3)"
-              data-price="2200"
-              data-rating="4.4"
-              data-brand="Nothing"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/d7708c12-cd0a-46c6-a71c-895a00da3f9c_Thumb.jpeg"
-                  alt="Nothing Phone (3)"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Nothing Phone (3)</h3>
-                <div class="product-price">2200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.4)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Honor Magic 7 Pro"
-              data-price="2900"
-              data-rating="4.5"
-              data-brand="Honor"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://imgstore.alta.ge/images/400/164/164074_5778_1.webp"
-                  alt="Honor Magic 7 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Honor Magic 7 Pro</h3>
-                <div class="product-price">2900 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Sony Xperia 1 VII"
-              data-price="4100"
-              data-rating="4.6"
-              data-brand="Sony"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://fdn2.gsmarena.com/vv/bigpic/sony-xperia-1-vii-violet.jpg"
-                  alt="Sony Xperia 1 VII"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Sony Xperia 1 VII</h3>
-                <div class="product-price">4100 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.6)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Nubia Red Magic 10 Pro"
-              data-price="2600"
-              data-rating="4.5"
-              data-brand="Nubia"
-              data-category="Smartphones"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://i.ebayimg.com/images/g/ib4AAOSw-A9nWuJJ/s-l1200.png"
-                  alt="Nubia Red Magic 10 Pro"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Nubia Red Magic 10 Pro</h3>
-                <div class="product-price">2600 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Apple MacBook Pro 16 M4 Max"
-              data-price="8999"
-              data-rating="4.9"
-              data-brand="Apple"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-spaceblack-select-202410?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1728916206661"
-                  alt="Apple MacBook Pro 16 M4 Max"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple MacBook Pro 16 M4 Max</h3>
-                <div class="product-price">8999 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.9)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Dell XPS 15 Plus"
-              data-price="6500"
-              data-rating="4.6"
-              data-brand="Dell"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/zoommer-images/thumbs/0166977_dell-xps-15-9520-210-bdvf_544224_i7_ge-black_550.jpeg"
-                  alt="Dell XPS 15 Plus"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Dell XPS 15 Plus</h3>
-                <div class="product-price">6500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.6)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Lenovo ThinkPad X1 Carbon Gen 12"
-              data-price="5800"
-              data-rating="4.7"
-              data-brand="Lenovo"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://www.shoppingexpress.com.au/assets/thumb/21RB0018AU.jpg?20251126123642"
-                  alt="Lenovo ThinkPad X1 Carbon Gen 12"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Lenovo ThinkPad X1 Carbon Gen 12</h3>
-                <div class="product-price">5800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="ASUS ROG Zephyrus G16"
-              data-price="7200"
-              data-rating="4.8"
-              data-brand="Asus"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/a93abbef-c4d4-4a16-974e-dde22d9c8bd6_Thumb.jpeg"
-                  alt="ASUS ROG Zephyrus G16"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">ASUS ROG Zephyrus G16</h3>
-                <div class="product-price">7200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.8)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="HP Spectre x360 16"
-              data-price="5500"
-              data-rating="4.5"
-              data-brand="HP"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/94f3becd-acc9-4a41-87e1-b734e0532021_Thumb.jpeg"
-                  alt="HP Spectre x360 16"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">HP Spectre x360 16</h3>
-                <div class="product-price">5500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Microsoft Surface Laptop 6"
-              data-price="4800"
-              data-rating="4.6"
-              data-brand="Microsoft"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://cdn.ballicom.co.uk/?r=peyJpbWciOiJcL1wvaW1hZ2VzXC9jZG5cLzE3XC9jMVwvMTdjMTQ4MDUtMTBiYy00YWYwLWJiOTMtNGIyMjI2YWVlYzNkLmpwZyIsInNpemUiOjg1MCwiZXh0ZW5zaW9uIjoianBnIn0=b"
-                  alt="Microsoft Surface Laptop 6"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Microsoft Surface Laptop 6</h3>
-                <div class="product-price">4800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.6)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Acer Swift 14 AI"
-              data-price="3200"
-              data-rating="4.4"
-              data-brand="Acer"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://hnau.imgix.net/media/catalog/product/a/c/acer-swift-14-ai-1.jpg?auto=compress&auto=format&fill-color=FFFFFF&fit=fill&fill=solid&w=496&h=279"
-                  alt="Acer Swift 14 AI"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Acer Swift 14 AI</h3>
-                <div class="product-price">3200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.4)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="LG Gram 17"
-              data-price="4500"
-              data-rating="4.5"
-              data-brand="LG"
-              data-category="Laptops"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXvED9wnkEWNCOglxvEmoJpxm_WE-AzncOMw&s"
-                  alt="LG Gram 17"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">LG Gram 17</h3>
-                <div class="product-price">4500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.5)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Apple iPad Pro 13 M4"
-              data-price="4500"
-              data-rating="4.9"
-              data-brand="Apple"
-              data-category="Tablets"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/25c76c22-d83f-4956-bb76-0cfa02e7e087_Thumb.jpeg"
-                  alt="Apple iPad Pro 13 M4"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple iPad Pro 13 M4</h3>
-                <div class="product-price">4500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.9)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Samsung Galaxy Tab S10 Ultra"
-              data-price="3800"
-              data-rating="4.7"
-              data-brand="Samsung"
-              data-category="Tablets"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/a9231234-111b-4035-8387-2077bc66f9fc_Thumb.jpeg"
-                  alt="Samsung Galaxy Tab S10 Ultra"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Samsung Galaxy Tab S10 Ultra</h3>
-                <div class="product-price">3800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Microsoft Surface Pro 11"
-              data-price="3200"
-              data-rating="4.6"
-              data-brand="Microsoft"
-              data-category="Tablets"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://lapvip.vn/upload/products/original/surface-pro-11-snapdragon-x-elite-16gb512gboled-seo-1719540466.jpg"
-                  alt="Microsoft Surface Pro 11"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Microsoft Surface Pro 11</h3>
-                <div class="product-price">3200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.6)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Apple iPad Air 13 M2"
-              data-price="2800"
-              data-rating="4.7"
-              data-brand="Apple"
-              data-category="Tablets"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/8aa03bf8-6178-4b8a-bddd-1d7ea6d98ff4_Thumb.jpeg"
-                  alt="Apple iPad Air 13 M2"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple iPad Air 13 M2</h3>
-                <div class="product-price">2800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Sony WH-1000XM6"
-              data-price="1400"
-              data-rating="4.9"
-              data-brand="Sony"
-              data-category="Audio"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/aafe046e-efde-4b21-a61a-81500df5ec0a_Thumb.jpeg"
-                  alt="Sony WH-1000XM6"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Sony WH-1000XM6</h3>
-                <div class="product-price">1400 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.9)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Apple AirPods Max 2"
-              data-price="2200"
-              data-rating="4.8"
-              data-brand="Apple"
-              data-category="Audio"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/57b9e569-9474-459b-a21f-f70763bf8dea_Thumb.jpeg"
-                  alt="Apple AirPods Max 2"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple AirPods Max 2</h3>
-                <div class="product-price">2200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.8)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Apple Watch Ultra 3"
-              data-price="2800"
-              data-rating="4.9"
-              data-brand="Apple"
-              data-category="Wearables"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/watch-card-40-ultra2-202409?wid=680&hei=528&fmt=p-jpg&qlt=95&.v=1724948964536"
-                  alt="Apple Watch Ultra 3"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Apple Watch Ultra 3</h3>
-                <div class="product-price">2800 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.9)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Samsung Galaxy Watch 7 Ultra"
-              data-price="2200"
-              data-rating="4.7"
-              data-brand="Samsung"
-              data-category="Wearables"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://s3.zoommer.ge/site/438974f4-face-411e-8912-5808c50ea6be_Thumb.jpeg"
-                  alt="Samsung Galaxy Watch 7 Ultra"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Samsung Galaxy Watch 7 Ultra</h3>
-                <div class="product-price">2200 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-number">(4.7)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="LG UltraGear 27GR95QE"
-              data-price="3500"
-              data-rating="4.8"
-              data-brand="LG"
-              data-category="Monitors"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://www.lg.com/content/dam/channel/wcms/hk_en/images/monitors/gaming/27gs95qe-b/gallery/04-thumbnail/ultragear-27gs95qe-thumbnail-01.jpg"
-                  alt="LG UltraGear 27GR95QE"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">LG UltraGear 27GR95QE</h3>
-                <div class="product-price">3500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.8)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-
-            <div
-              class="product-card"
-              data-name="Samsung Odyssey OLED G9"
-              data-price="5500"
-              data-rating="4.9"
-              data-brand="Samsung"
-              data-category="Monitors"
-            >
-              <div class="product-image-container">
-                <img
-                  src="https://images.samsung.com/is/image/samsung/p6pim/ca/ls49cg954snxza/gallery/ca-odyssey-oled-g9-g95sc-ls49cg954snxza-thumb-539084990"
-                  alt="Samsung Odyssey OLED G9"
-                  class="product-image"
-                />
-              </div>
-              <div class="product-info">
-                <h3 class="product-name">Samsung Odyssey OLED G9</h3>
-                <div class="product-price">5500 ₾</div>
-                <div class="product-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-number">(4.9)</span>
-                </div>
-                <button class="add-to-cart-btn">კალათაში დამატება</button>
-              </div>
-            </div>
-          </div>
+          <div class="products-grid" id="productsGrid"></div>
 
           <div class="no-results" id="noResults" style="display: none">
             <p>პროდუქტები ვერ მოიძებნა</p>
@@ -1302,23 +349,5 @@
     </div>
 
     <script src="app.js"></script>
-    <script>
-      function filterByCategory(category) {
-        document.getElementById("categoryFilter").value = category;
-        document.getElementById("brandFilter").value = "";
-        applyFilters();
-        document
-          .getElementById("productsSection")
-          .scrollIntoView({ behavior: "smooth" });
-      }
-
-      function filterByBrand(brand) {
-        document.getElementById("brandFilter").value = brand;
-        applyFilters();
-        document
-          .getElementById("productsSection")
-          .scrollIntoView({ behavior: "smooth" });
-      }
-    </script>
   </body>
 </html>
