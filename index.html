@@ -87,10 +87,7 @@
         <div class="categories-container">
           <h2 class="section-heading">კატეგორიები</h2>
           <div class="categories-grid">
-            <div
-              class="category-card"
-              onclick="filterByCategory('Smartphones')"
-            >
+            <div class="category-card" onclick="filterByCategory('phones')">
               <div class="category-logo category-logo-icon">
                 <img
                   src="https://imgstore.alta.ge/images/5fcb11a1-6e39-4615-aa03-14c32a7bab08_Thumb.png"
@@ -100,7 +97,7 @@
               <h3 class="category-name">სმართფონები</h3>
               <p class="category-count">იტვირთება...</p>
             </div>
-            <div class="category-card" onclick="filterByCategory('Laptops')">
+            <div class="category-card" onclick="filterByCategory('laptops')">
               <div class="category-logo category-logo-icon">
                 <img
                   src="https://imgstore.alta.ge/images/aa5c0aaf-59ee-43de-9610-88104365fabe_Thumb.png"
@@ -110,7 +107,7 @@
               <h3 class="category-name">ლეპტოპები</h3>
               <p class="category-count">იტვირთება...</p>
             </div>
-            <div class="category-card" onclick="filterByCategory('Tablets')">
+            <div class="category-card" onclick="filterByCategory('tablets')">
               <div class="category-logo category-logo-icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +127,7 @@
               <h3 class="category-name">ტაბლეტები</h3>
               <p class="category-count">იტვირთება...</p>
             </div>
-            <div class="category-card" onclick="filterByCategory('Audio')">
+            <div class="category-card" onclick="filterByCategory('audio')">
               <div class="category-logo category-logo-icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +146,7 @@
               <h3 class="category-name">აუდიო</h3>
               <p class="category-count">იტვირთება...</p>
             </div>
-            <div class="category-card" onclick="filterByCategory('Wearables')">
+            <div class="category-card" onclick="filterByCategory('wearables')">
               <div class="category-logo category-logo-icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +168,7 @@
               <h3 class="category-name">სმარტ საათები</h3>
               <p class="category-count">იტვირთება...</p>
             </div>
-            <div class="category-card" onclick="filterByCategory('Monitors')">
+            <div class="category-card" onclick="filterByCategory('monitors')">
               <div class="category-logo category-logo-icon">
                 <img
                   src="https://imgstore.alta.ge/images/cca43c78-55c4-45bc-9548-01afd095313c_Thumb.png"
@@ -194,12 +191,12 @@
               <label class="filter-label">კატეგორია</label>
               <select id="categoryFilter" class="filter-select">
                 <option value="">ყველა კატეგორია</option>
-                <option value="Smartphones">სმართფონები</option>
-                <option value="Laptops">ლეპტოპები</option>
-                <option value="Tablets">ტაბლეტები</option>
-                <option value="Audio">აუდიო</option>
-                <option value="Wearables">სმარტ საათები</option>
-                <option value="Monitors">მონიტორები</option>
+                <option value="phones">სმართფონები</option>
+                <option value="laptops">ლეპტოპები</option>
+                <option value="tablets">ტაბლეტები</option>
+                <option value="audio">აუდიო</option>
+                <option value="wearables">სმარტ საათები</option>
+                <option value="monitors">მონიტორები</option>
               </select>
             </div>
 
@@ -207,27 +204,15 @@
               <label class="filter-label">ბრენდი</label>
               <select id="brandFilter" class="filter-select">
                 <option value="">ყველა ბრენდი</option>
-                <option value="Apple">Apple</option>
-                <option value="Samsung">Samsung</option>
-                <option value="Google">Google</option>
-                <option value="OnePlus">OnePlus</option>
-                <option value="Xiaomi">Xiaomi</option>
-                <option value="Nothing">Nothing</option>
-                <option value="Oppo">Oppo</option>
-                <option value="Vivo">Vivo</option>
-                <option value="Realme">Realme</option>
-                <option value="ASUS">ASUS</option>
-                <option value="Lenovo">Lenovo</option>
-                <option value="HP">HP</option>
-                <option value="Dell">Dell</option>
-                <option value="Microsoft">Microsoft</option>
-                <option value="Sony">Sony</option>
-                <option value="LG">LG</option>
+                <option value="apple">Apple</option>
+                <option value="asus">ASUS</option>
+                <option value="lenovo">Lenovo</option>
+                <option value="acer">Acer</option>
               </select>
             </div>
 
             <div class="filter-group">
-              <label class="filter-label">ფასი (₾)</label>
+              <label class="filter-label">ფასი ($)</label>
               <div style="display: flex; gap: 0.5rem">
                 <input
                   type="number"
@@ -278,7 +263,7 @@
             <div class="brands-grid">
               <button
                 class="brand-btn"
-                onclick="filterByBrand('Apple')"
+                onclick="filterByBrand('apple')"
                 style="
                   background: white;
                   border: 2px solid var(--primary);
@@ -292,7 +277,7 @@
               </button>
               <button
                 class="brand-btn"
-                onclick="filterByBrand('Samsung')"
+                onclick="filterByBrand('asus')"
                 style="
                   background: white;
                   border: 2px solid var(--primary);
@@ -306,7 +291,7 @@
               </button>
               <button
                 class="brand-btn"
-                onclick="filterByBrand('Google')"
+                onclick="filterByBrand('lenovo')"
                 style="
                   background: white;
                   border: 2px solid var(--primary);
@@ -320,7 +305,7 @@
               </button>
               <button
                 class="brand-btn"
-                onclick="filterByBrand('Xiaomi')"
+                onclick="filterByBrand('acer')"
                 style="
                   background: white;
                   border: 2px solid var(--primary);
